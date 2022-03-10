@@ -3,10 +3,10 @@ function setup(){
     canvas.center();
     video = createCapture(VIDEO);
     video.hide();
+    objectDetector = ml5.objectDetector('cocossd',modelLoaded); 
+   objectDetector.detect(video,gotResult)
 }
 function draw(){
-   objectDetector = ml5.objectDetector('cocossd',modelLoaded); 
-   objectDetector.detect(video,gotResult)
    detectionTarget = document.getElementById('obj-target').value;
 }
 function modelLoaded(){
