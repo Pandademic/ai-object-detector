@@ -5,17 +5,21 @@ function setup(){
     video.hide();
 }
 function draw(){
-   objectDetector=ml5.objectDetector('cocossd',modelLoaded); 
+   objectDetector = ml5.objectDetector('cocossd',modelLoaded); 
    objectDetctor.detect(video,gotResult)
-   detectionTarget = document.getElementById('obj-target').value ;
+   detectionTarget = document.querySelector('obj-target').value;
 }
 function modelLoaded(){
     console.log("model loaded!")
     document.getElementById('status').innerHTML = "Status : Model Loaded";
     setTimeout(() => { document.getElementById('status').innerHTML = "Status : Detecting Objects"; }, 7000);
 }
-function gotResult(){
+function gotResult(results){
         if(detectionTarget = ""){
-           document.getElementById('status').innerHTML = "✗(ERROR): NO DECTECTION TARGET ||| ✓(POSSIBLE SOLUTION) : enter something in above input box";
+           document.getElementById('status').innerHTML = "✗(ERROR): NO DECTECTION TARGET";
+           setTimeout(() => {document.getElemnetById('status').innerHTML = "✓(POSSIBLE SOLUTION) : enter something in above input box"}, 10000);
+        }
+        else{
+            conole.log(results)
         }
 }
