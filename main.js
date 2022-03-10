@@ -7,7 +7,7 @@ function setup(){
 function draw(){
    objectDetector = ml5.objectDetector('cocossd',modelLoaded); 
    objectDetector.detect(video,gotResult)
-   detectionTarget = document.querySelector('obj-target').value;
+   detectionTarget = document.getElementById('obj-target').value;
 }
 function modelLoaded(){
     console.log("model loaded!")
@@ -20,6 +20,6 @@ function gotResult(results){
            setTimeout(() => {document.getElemnetById('status').innerHTML = "✓(POSSIBLE SOLUTION) : enter something in above input box"}, 10000);
         }
         else{
-            conole.log(results)
+            console.log(results)
         }
 }
