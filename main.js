@@ -6,7 +6,7 @@ function setup(){
 }
 function draw(){
    objectDetector = ml5.objectDetector('cocossd',modelLoaded); 
-   objectDetctor.detect(video,gotResult)
+   objectDetector.detect(video,gotResult)
    detectionTarget = document.querySelector('obj-target').value;
 }
 function modelLoaded(){
