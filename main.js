@@ -4,7 +4,7 @@ function setup(){
     video = createCapture(VIDEO);
     video.hide();
     objectDetector = ml5.objectDetector('cocossd',modelLoaded); 
-   objectDetector.detect(video,gotResult)
+    objectDetector.detect(video,gotResult)
 }
 function draw(){
    detectionTarget = document.getElementById('obj-target').value;
@@ -17,6 +17,7 @@ function modelLoaded(){
 function gotResult(results){
         if(detectionTarget = ""){
            document.getElementById('status').innerHTML = "✗(ERROR): NO DECTECTION TARGET";
+           console.log('status').innerHTML = "✗(ERROR): NO DECTECTION TARGET";
            setTimeout(() => {document.getElemnetById('status').innerHTML = "✓(POSSIBLE SOLUTION) : enter something in above input box"}, 10000);
         }
         else{
