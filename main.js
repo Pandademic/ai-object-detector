@@ -1,26 +1,54 @@
+console.log("the script was callled")
+let detections;
 function setup(){
-    canvas = createCanvas(640,420);
+    canvas = createCanvas(400, 400);
     canvas.center();
-    video = createCapture(VIDEO);
-    video.hide();
-    objectDetector = ml5.objectDetector('cocossd',modelLoaded); 
-    objectDetector.detect(video,gotResult)
+    canvas.parent('p5-target');
+    video = createCapture(VIDEO); 
+    setTimeout(() => {objectDetector = ml5.objectDetector('cocossd',modelLoaded);}, 10000);
 }
 function draw(){
-   detectionTarget = document.getElementById('obj-target').value;
+    setTimeout(() => {detect();}, 10000);
+    console.log("I hope you see me")
+    detectionTarget = document.getElementById('target').value;
+    if(detections){
+	detections.forEach(detected => {
+	   console.log("FOUND:",detected.label , " @ ",detected.x,detected.y)
+	});
+
+    }
 }
 function modelLoaded(){
-    console.log("model loaded!")
-    document.getElementById('status').innerHTML = "Status : Model Loaded";
-    setTimeout(() => { document.getElementById('status').innerHTML = "Status : Detecting Objects"; }, 7000);
+    console.log("model loaded!");
+    //detect();
 }
-function gotResult(results){
-        if(detectionTarget = ""){
-           document.getElementById('status').innerHTML = "✗(ERROR): NO DECTECTION TARGET";
-           console.log('status').innerHTML = "✗(ERROR): NO DECTECTION TARGET";
-           setTimeout(() => {document.getElemnetById('status').innerHTML = "✓(POSSIBLE SOLUTION) : enter something in above input box"}, 10000);
-        }
-        else{
-            console.log(results)
-        }
+function detect(){
+    console.log("DETECTOR CALLED");
+    if(detections){
+	detections.forEach(detected => {
+	    console.log("FOUND:",detected.label , " @ ",detected.x,detected.y)
+            if(detected.label == detectionTarget){
+		console.warn("I FOUND WHAT UR LOOOKING FOR")
+                document.getElementById("msgbox").innerHTML = "I FOUND WHAT YOU'RE LOOKING FOR. I FOUND A "+detected.label+" and I think your looking for a "+ detectionTarget+" !!!!!!"
+	    }
+	});
+    };
+    objectDetector.detect(video,gotResult);
+}
+function gotResult(err, results){
+    console.log("GOT RESULTS HANDLER CALLED");
+    if(err){
+	console.warn(err);
+    }
+    if(detectionTarget == ""){
+	console.warn("detection target is empty")
+	return
+    }
+
+    if(results.length > 0){
+	console.log(results);
+    }
+    console.log("setting detections")
+    detections = results;
+    detect();
 }
