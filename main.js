@@ -42,7 +42,6 @@ function gotResult(err, results){
     }
     if(detectionTarget == ""){
 	console.warn("detection target is empty")
-	document.getElementById("msgbox").innerHTML = "please enter something into the box (message will stay untill something else will send a message"
 	return
     }
 
